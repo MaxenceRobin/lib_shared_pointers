@@ -19,7 +19,7 @@
  * 
  * @param size : Size in bytes of the allocated shared memory.
  * @param unalloc_cb : Callback to unallock resources when the shared memory.
- * will be freed.
+ * will be free'd.
  * @return void* : A pointer to the allocated shared memory. On failure NULL
  * is returned.
  * 
@@ -37,7 +37,7 @@ void *shared_alloc(const size_t size, void (*unalloc_cb)(void *));
  * @return void* : Pointer to the new shared memory, this can be different than
  * ptr. In case of failure NULL is returned.
  * 
- * @note Unlike realloc, setting of size of 0 will not free the shared memory.
+ * @note Unlike realloc, setting a size of 0 will not free the shared memory.
  */
 void *shared_realloc(void *ptr, const size_t size);
 
@@ -51,7 +51,7 @@ void shared_ref(void *ptr);
 /**
  * @brief Unreferences the shared memory, decrementing its references count.
  * If the references count reach 0, the unalloc_cb specified at creation is
- * called on ptr, then the shared memory is freed.
+ * called on ptr, then the shared memory is free'd.
  * 
  * @param ptr : Pointer to the shared memory to unreference.
  * @return void* : If this call results in freeing the shared memory, NULL is
@@ -66,8 +66,7 @@ void *shared_unref(void *ptr);
  * @param ptr : Pointer to the shared memory for which to get the references
  * count. 
  * @return int : Number of references on the given shared memory. On failure a
- * negative errno is returned
- * pointer.
+ * negative errno is returned.
  */
 int shared_count(const void *ptr);
 
