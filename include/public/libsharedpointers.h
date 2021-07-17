@@ -45,8 +45,9 @@ void *shared_realloc(void *ptr, const size_t size);
  * @brief References the shared memory, incrementing its references count.
  * 
  * @param ptr : Pointer to the shared memory to reference.
+ * @return void* : ptr itself for convenience
  */
-void shared_ref(void *ptr);
+void *shared_ref(void *ptr);
 
 /**
  * @brief Unreferences the shared memory, decrementing its references count.

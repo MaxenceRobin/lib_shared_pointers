@@ -55,12 +55,13 @@ void *shared_realloc(void *ptr, const size_t size)
         return meta_to_ptr(meta);
 }
 
-void shared_ref(void *ptr)
+void *shared_ref(void *ptr)
 {
         if (!ptr)
-                return;
+                return NULL;
 
         ptr_to_meta(ptr)->count++;
+        return ptr;
 }
 
 void *shared_unref(void *ptr)
@@ -68,7 +69,7 @@ void *shared_unref(void *ptr)
         struct meta *meta = NULL;
 
         if (!ptr)
-                goto out;
+                return NULL;
 
         meta = ptr_to_meta(ptr);
         if (atomic_fetch_sub(&meta->count, 1) == 1) {
@@ -78,7 +79,7 @@ void *shared_unref(void *ptr)
                 free(meta);
                 ptr = NULL;
         }
-out:
+
         return ptr;
 }
 
