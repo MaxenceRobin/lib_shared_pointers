@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
+project(${PROJECT_NAME} libsharedpointers)
 
 # Variables --------------------------------------------------------------------
 
-set(PROJECT_NAME libsharedpointers)
 set(TARGET_NAME sharedpointers)
 
 set(SOURCES
@@ -18,8 +18,6 @@ set(INSTALL_DIR
 )
 
 # Configuration ----------------------------------------------------------------
-
-project(${PROJECT_NAME})
 
 add_library(${TARGET_NAME} SHARED ${SOURCES})
 target_include_directories(${TARGET_NAME} PUBLIC include/public)
