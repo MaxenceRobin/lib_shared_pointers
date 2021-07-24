@@ -9,7 +9,7 @@
 /* Definitions ---------------------------------------------------------------*/
 
 struct meta {
-        _Atomic unsigned int count;
+        atomic_uint count;
         void (*unalloc_cb)(void *ptr);
 };
 
@@ -29,9 +29,7 @@ void *meta_to_ptr(const struct meta *meta)
 
 void *shared_alloc(const size_t size, void (*unalloc_cb)(void *))
 {
-        struct meta *meta = NULL;
-
-        meta = malloc(sizeof(*meta) + size);
+        struct meta *meta = malloc(sizeof(*meta) + size);
         if (!meta)
                 return NULL;
 
@@ -42,12 +40,10 @@ void *shared_alloc(const size_t size, void (*unalloc_cb)(void *))
 
 void *shared_realloc(void *ptr, const size_t size)
 {
-        struct meta *meta = NULL;
-
         if (!ptr)
                 return NULL;
 
-        meta = ptr_to_meta(ptr);
+        struct meta *meta = ptr_to_meta(ptr);
         meta = realloc(meta, sizeof(*meta) + size);
         if (!meta)
                 return NULL;
@@ -66,12 +62,10 @@ void *shared_ref(void *ptr)
 
 void *shared_unref(void *ptr)
 {
-        struct meta *meta = NULL;
-
         if (!ptr)
                 return NULL;
 
-        meta = ptr_to_meta(ptr);
+        struct meta *meta = ptr_to_meta(ptr);
         if (atomic_fetch_sub(&meta->count, 1) == 1) {
                 if (meta->unalloc_cb)
                         meta->unalloc_cb(ptr);
