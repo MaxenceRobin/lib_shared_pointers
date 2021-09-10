@@ -1,6 +1,12 @@
-#include "libsharedpointers.h"
+/**
+ * @author Maxence ROBIN
+ * @brief Provides a malloc like interface for shared memory pointers with
+ * reference counting.
+ */
 
 /* Includes ------------------------------------------------------------------*/
+
+#include "libsharedpointers.h"
 
 #include <errno.h>
 #include <stdatomic.h>
