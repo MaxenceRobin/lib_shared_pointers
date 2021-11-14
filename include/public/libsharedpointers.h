@@ -14,60 +14,51 @@
 /* API -----------------------------------------------------------------------*/
 
 /**
- * @brief Creates a new shared memory pointer. A newly created shared memory
- * is already referenced once and shared_unref must be called on it later.
+ * @brief Creates a new pointer on a shared memory of 'size' bytes, that will be
+ * free()'d with 'unalloc_cb' at end of life.
  * 
- * @param size : Size in bytes of the allocated shared memory.
- * @param unalloc_cb : Callback to unallock resources when the shared memory.
- * will be free'd.
- * @return void* : A pointer to the allocated shared memory. On failure NULL
- * is returned.
+ * @return Pointer to the shared memory on success.
+ * @return NULL on failure.
  * 
- * @warning The unalloc_cb MUST NOT free the shared memory, but only unalloc
- * ressources that could be stored inside it (pointer inside a shared struct).
- * If there is nothing to do on unalloc, unalloc_cb must be set to NULL.
+ * @warning 'unalloc_cb' MUST NOT free the shared memory itself, but only
+ * unalloc ressources that could be stored inside it (pointer inside a shared
+ * struct). If there is nothing to do, 'unalloc_cb' must be set to NULL. 
  */
 void *shared_alloc(const size_t size, void (*unalloc_cb)(void *));
 
 /**
- * @brief Resizes a previously allocated shared memory.
+ * @brief Resizes the shared memory pointer 'ptr' to 'size' bytes.
  * 
- * @param ptr : Pointer to the shared memory.
- * @param size : New size of the shared memory.
- * @return void* : Pointer to the new shared memory, this can be different than
- * ptr. In case of failure NULL is returned.
+ * @return Pointer to the reallocated shared memory on success.
+ * @return NULL if 'ptr' is invalid, or on failure.
  * 
  * @note Unlike realloc, setting a size of 0 will not free the shared memory.
  */
 void *shared_realloc(void *ptr, const size_t size);
 
 /**
- * @brief References the shared memory, incrementing its references count.
+ * @brief References the shared memory pointer 'ptr', incrementing its
+ * references count.
  * 
- * @param ptr : Pointer to the shared memory to reference.
- * @return void* : ptr itself for convenience
+ * @return 'ptr' itself for convenience.
  */
 void *shared_ref(void *ptr);
 
 /**
- * @brief Unreferences the shared memory, decrementing its references count.
- * If the references count reach 0, the unalloc_cb specified at creation is
- * called on ptr, then the shared memory is free'd.
+ * @brief Unreferences the shared memory pointer 'ptr', decrementing its
+ * references count. If the references count reach 0, the 'unalloc_cb'
+ * specified at creation is called on 'ptr', then the shared memory is free()'d.
  * 
- * @param ptr : Pointer to the shared memory to unreference.
- * @return void* : If this call results in freeing the shared memory, NULL is
- * returned, otherwise ptr is returned.
+ * @return 'ptr' itself if its reference count is greater than 0 after the call.
+ * @return NULL if the reference count reaches 0 upon the call.
  */
 void *shared_unref(void *ptr);
 
 /**
- * @brief Returns the number of current references on the given shared memory
- * pointer.
+ * @brief Returns the reference count of 'ptr'.
  * 
- * @param ptr : Pointer to the shared memory for which to get the references
- * count. 
- * @return int : Number of references on the given shared memory. On failure a
- * negative errno is returned.
+ * @return The reference count of 'ptr' on success.
+ * @return -EINVAL if 'ptr' is invalid.
  */
 int shared_count(const void *ptr);
 
