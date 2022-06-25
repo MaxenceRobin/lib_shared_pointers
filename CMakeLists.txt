@@ -3,14 +3,14 @@ project(libsharedpointers)
 
 # Variables --------------------------------------------------------------------
 
-set(TARGET_NAME sharedpointers)
+set(TARGET_NAME shared_pointers)
 
 set(SOURCES
-        src/libsharedpointers.c
+        src/lib_shared_pointers.c
 )
 
 set(PUBLIC_HEADERS
-        include/public/libsharedpointers.h
+        include/public
 )
 
 set(INSTALL_DIR
@@ -20,7 +20,7 @@ set(INSTALL_DIR
 # Configuration ----------------------------------------------------------------
 
 add_library(${TARGET_NAME} SHARED ${SOURCES})
-target_include_directories(${TARGET_NAME} PUBLIC include/public)
+target_include_directories(${TARGET_NAME} PUBLIC ${PUBLIC_HEADERS})
 
 set_target_properties(${TARGET_NAME}
         PROPERTIES
