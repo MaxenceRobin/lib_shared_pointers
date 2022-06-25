@@ -1,4 +1,4 @@
-# LIBSHAREDPOINTERS
+# Lib_shared_pointers
 
 Simple C lib for shared memory pointers.
 
@@ -8,7 +8,7 @@ The machanism is tranparent for the user and returned pointers can be manipulate
 ## Example
 
 ```C
-#include "libsharedpointers.h"
+#include "lib_shared_pointers.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +40,7 @@ int main()
         thrd_t thread;
         int status = EXIT_FAILURE;
         int res = -1;
-        
+
         value = shared_alloc(sizeof(*value), unalloc);
         if (!value)
                 goto out;
@@ -51,7 +51,7 @@ int main()
 
         printf("Count main = %d\n", shared_count(value));
         thrd_join(thread, NULL);
-        
+
         status = EXIT_SUCCESS;
 error_create_thread:
         shared_unref(value);

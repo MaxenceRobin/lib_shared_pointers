@@ -6,7 +6,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "libsharedpointers.h"
+#include "lib_shared_pointers.h"
 
 #include <errno.h>
 #include <stdatomic.h>

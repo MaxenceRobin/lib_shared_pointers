@@ -3,10 +3,10 @@ project(libsharedpointers)
 
 # Variables --------------------------------------------------------------------
 
-set(TARGET_NAME sharedpointers)
+set(TARGET_NAME shared_pointers)
 
 set(SOURCES
-        src/libsharedpointers.c
+        src/lib_shared_pointers.c
 )
 
 set(PUBLIC_HEADERS
