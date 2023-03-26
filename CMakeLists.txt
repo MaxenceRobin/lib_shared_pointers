@@ -6,11 +6,11 @@ project(libsharedpointers)
 set(TARGET_NAME shared_pointers)
 
 set(SOURCES
-        src/lib_shared_pointers.c
+        private/lib_shared_pointers.c
 )
 
 set(PUBLIC_HEADERS
-        include/public
+        public
 )
 
 set(INSTALL_DIR
